@@ -10,12 +10,12 @@ module ActiveRecord::Import::AbstractAdapter
         comma_bytes = arr.size
         sql_size_thus_far = sql_size + current_size + val.size + comma_bytes
         if NO_MAX_PACKET == max_bytes or sql_size_thus_far <= max_bytes
-          current_size += val.size            
+          current_size += val.bytesize            
           arr << val
         else
           value_sets << arr
           arr = [ val ]
-          current_size = val.size
+          current_size = val.bytesize
         end
       
         # if we're on the last iteration push whatever we have in arr to value_sets
