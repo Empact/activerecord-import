@@ -1,4 +1,13 @@
 module ActiveRecord::Import #:nodoc:
+  extend ActiveSupport::Autoload
+
+  autoload_under 'adapters' do
+    autoload :AbstractAdapter
+    autoload :MysqlAdapter
+    autoload :PostgreSQLAdapter, 'active_record/import/adapters/postgresql_adapter'
+    autoload :Sqlite3Adapter
+  end
+
   module ConnectionAdapters ; end
 
   class Result < Struct.new(:failed_instances, :num_inserts)
@@ -46,7 +55,7 @@ module ActiveRecord::Import #:nodoc:
   end
 end
 
-require "active_record/import/active_record/adapters/abstract_adapter"
+ActiveRecord::ConnectionAdapters::AbstractAdapter.send(:include, ActiveRecord::Import::AbstractAdapter)
 require "active_record/import/synchronize"
 
 class ActiveRecord::Base
