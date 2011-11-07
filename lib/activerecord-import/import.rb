@@ -4,6 +4,19 @@ module ActiveRecord::Import #:nodoc:
   class Result < Struct.new(:failed_instances, :num_inserts)
   end
 
+  # use tz as set in ActiveRecord::Base
+  tproc = lambda do
+    ActiveRecord::Base.default_timezone == :utc ? Time.now.utc : Time.now
+  end
+
+  TIME_COLUMNS = {
+    :create => { "created_on" => tproc ,
+                 "created_at" => tproc },
+    :update => { "updated_on" => tproc ,
+                 "updated_at" => tproc }
+  }
+  TIME_COLUMN_NAMES = TIME_COLUMNS[:create].keys + TIME_COLUMNS[:update].keys
+
   module ImportSupport #:nodoc:
     def supports_import? #:nodoc:
       true
@@ -19,20 +32,6 @@ end
 
 class ActiveRecord::Base
   class << self
-
-    # use tz as set in ActiveRecord::Base
-    tproc = lambda do
-      ActiveRecord::Base.default_timezone == :utc ? Time.now.utc : Time.now
-    end
-
-    AREXT_RAILS_COLUMNS = {
-      :create => { "created_on" => tproc ,
-                   "created_at" => tproc },
-      :update => { "updated_on" => tproc ,
-                   "updated_at" => tproc }
-    }
-    AREXT_RAILS_COLUMN_NAMES = AREXT_RAILS_COLUMNS[:create].keys + AREXT_RAILS_COLUMNS[:update].keys
-
     # Returns true if the current database connection adapter
     # supports import functionality, otherwise returns false.
     def supports_import?
@@ -303,7 +302,7 @@ class ActiveRecord::Base
     end
 
     def add_special_rails_stamps( column_names, array_of_attributes, options )
-      AREXT_RAILS_COLUMNS[:create].each_pair do |key, blk|
+      ActiveRecord::Import::TIME_COLUMNS[:create].each_pair do |key, blk|
         if self.column_names.include?(key)
           value = blk.call
           if index=column_names.index(key)
@@ -316,7 +315,7 @@ class ActiveRecord::Base
         end
       end
 
-      AREXT_RAILS_COLUMNS[:update].each_pair do |key, blk|
+      ActiveRecord::Import::TIME_COLUMNS[:update].each_pair do |key, blk|
         if self.column_names.include?(key)
           value = blk.call
           if index=column_names.index(key)
