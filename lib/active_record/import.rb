@@ -20,7 +20,6 @@ module ActiveRecord::Import #:nodoc:
 
   # Loads the import functionality for a specific database adapter
   def self.require_adapter(adapter)
-    require File.join(AdapterPath, "abstract_adapter")
     require File.join(AdapterPath, "#{base_adapter(adapter)}_adapter")
   end
 
