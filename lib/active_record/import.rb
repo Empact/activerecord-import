@@ -1,6 +1,3 @@
-require "active_record"
-require "active_record/version"
-
 module ActiveRecord::Import #:nodoc:
   module ConnectionAdapters ; end
 
