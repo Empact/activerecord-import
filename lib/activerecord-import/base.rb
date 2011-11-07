@@ -1,6 +1,3 @@
-require "active_record"
-require "active_record/version"
-
 module ActiveRecord::Import
   AdapterPath = File.join File.expand_path(File.dirname(__FILE__)), "active_record/adapters"
 
