@@ -8,7 +8,7 @@ class ActiveRecord::Base
   end
 end
 
-ActiveSupport.on_load(:active_record_connection_established) do |connection_pool|
+ActiveSupport.on_load(:active_record_connection_established) do |connection|
   if !ActiveRecord.const_defined?(:Import) || !ActiveRecord::Import.respond_to?(:load_from_connection_pool)
     require File.join File.dirname(__FILE__),  "activerecord-import/base"
   end

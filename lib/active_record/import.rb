@@ -1,7 +1,27 @@
-module ActiveRecord::Import::ConnectionAdapters ; end
+require "active_record"
+require "active_record/version"
 
 module ActiveRecord::Import #:nodoc:
+  module ConnectionAdapters ; end
+
   class Result < Struct.new(:failed_instances, :num_inserts)
+  end
+
+  AdapterPath = File.join File.expand_path(File.dirname(__FILE__)), "active_record/adapters"
+
+  def self.base_adapter(adapter)
+    case adapter
+    when 'mysqlspatial' then 'mysql'
+    when 'spatialite' then 'sqlite3'
+    when 'postgis' then 'postgresql'
+    else adapter
+    end
+  end
+
+  # Loads the import functionality for a specific database adapter
+  def self.require_adapter(adapter)
+    require File.join(AdapterPath, "abstract_adapter")
+    require File.join(AdapterPath, "#{base_adapter(adapter)}_adapter")
   end
 
   # use tz as set in ActiveRecord::Base
@@ -29,6 +49,9 @@ module ActiveRecord::Import #:nodoc:
     end
   end
 end
+
+require "active_record/import/active_record/adapters/abstract_adapter"
+require "active_record/import/synchronize"
 
 class ActiveRecord::Base
   class << self
