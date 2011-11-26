@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{Empact-activerecord-import}
-  s.version = "0.3.4"
+  s.version = "0.3.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Zach Dennis}, %q{Ben Woosley}]
-  s.date = %q{2011-08-16}
+  s.date = %q{2011-11-26}
   s.description = %q{Extraction of the ActiveRecord::Base#import functionality from ar-extensions for Rails 3 and beyond}
   s.email = %q{ben.woosley@gmail.com}
   s.extra_rdoc_files = [
@@ -32,15 +32,11 @@ Gem::Specification.new do |s|
     "lib/activerecord-import/adapters/sqlite3_adapter.rb",
     "lib/activerecord-import/base.rb",
     "lib/activerecord-import/import.rb",
-    "lib/activerecord-import/mysql.rb",
-    "lib/activerecord-import/mysql2.rb",
-    "lib/activerecord-import/postgresql.rb",
-    "lib/activerecord-import/sqlite3.rb",
     "lib/activerecord-import/synchronize.rb"
   ]
   s.homepage = %q{http://github.com/Empact/activerecord-import}
   s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.5}
+  s.rubygems_version = %q{1.8.8}
   s.summary = %q{Bulk-loading extension for ActiveRecord}
 
   if s.respond_to? :specification_version then
