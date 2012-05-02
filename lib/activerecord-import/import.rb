@@ -217,6 +217,7 @@ class ActiveRecord::Base
 
     # TODO import_from_table needs to be implemented.
     def import_from_table( options ) # :nodoc:
+      raise NotImplementedError, 'import_from_table needs to be implemented'
     end
 
     # Imports the passed in +column_names+ and +array_of_attributes+
