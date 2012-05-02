@@ -1,5 +1,3 @@
-require "ostruct"
-
 module ActiveRecord::Import::ConnectionAdapters ; end
 
 module ActiveRecord::Import #:nodoc:
