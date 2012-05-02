@@ -15,11 +15,6 @@ begin
     gem.authors = ["Zach Dennis", "Ben Woosley"]
     gem.files = FileList["VERSION", "Rakefile", "README*", "lib/**/*"]
 
-    bundler = Bundler.load
-    bundler.dependencies_for(:default).each do |dependency|
-      gem.add_dependency dependency.name, *dependency.requirements_list
-    end
-
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
