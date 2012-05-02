@@ -165,14 +165,9 @@ class ActiveRecord::Base
 
       # assume array of model objects
       if args.last.is_a?( Array ) and args.last.first.is_a? ActiveRecord::Base
-        if args.length == 2
-          models = args.last
-          column_names = args.first
-        else
-          models = args.first
-          column_names = self.column_names.dup
-        end
-        
+        models = args.pop
+        column_names = args.first || self.column_names.dup
+
         array_of_attributes = models.map do |model|
           # this next line breaks sqlite.so with a segmentation fault
           # if model.new_record? || options[:on_duplicate_key_update]
@@ -219,7 +214,7 @@ class ActiveRecord::Base
         synchronize( options[:synchronize], sync_keys)
       end
 
-      return_obj.num_inserts = 0 if return_obj.num_inserts.nil?
+      return_obj.num_inserts ||= 0
       return_obj
     end
     
