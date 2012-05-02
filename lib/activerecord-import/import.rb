@@ -272,9 +272,11 @@ class ActiveRecord::Base
         post_sql_statements = connection.post_sql_statements( quoted_table_name, options )
 
         # perform the inserts
-        number_inserted = connection.insert_many( [ insert_sql, post_sql_statements ].flatten,
-                                                  values_sql,
-                                                  "#{self.class.name} Create Many Without Validations Or Callbacks" )
+        number_inserted = connection.insert_many(
+          [ insert_sql, post_sql_statements ].flatten,
+          values_sql,
+          "#{self.class.name} Create Many Without Validations Or Callbacks"
+        )
       end
       number_inserted
     end
