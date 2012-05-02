@@ -181,12 +181,12 @@ class ActiveRecord::Base
       # supports 2-element array and array
       elsif args.size == 2 and args.first.is_a?( Array )
         column_names, array_of_attributes = args
+
+        # dup the passed in array so we don't modify it unintentionally
+        array_of_attributes = array_of_attributes.dup
       else
         raise ArgumentError
       end
-
-      # dup the passed in array so we don't modify it unintentionally
-      array_of_attributes = array_of_attributes.dup
 
       # Force the primary key col into the insert if it's not
       # on the list and we are using a sequence and stuff a nil
@@ -201,12 +201,13 @@ class ActiveRecord::Base
          add_special_rails_stamps column_names, array_of_attributes, options
       end
 
-      return_obj = if is_validating
-        import_with_validations( column_names, array_of_attributes, options )
-      else
-        num_inserts = import_without_validations_or_callbacks( column_names, array_of_attributes, options )
-        ActiveRecord::Import::Result.new([], num_inserts)
-      end
+      return_obj =
+        if is_validating
+          import_with_validations( column_names, array_of_attributes, options )
+        else
+          num_inserts = import_without_validations_or_callbacks( column_names, array_of_attributes, options )
+          ActiveRecord::Import::Result.new([], num_inserts)
+        end
 
       if options[:synchronize]
         sync_keys = options[:synchronize_keys] || [self.primary_key]
@@ -241,7 +242,7 @@ class ActiveRecord::Base
         instance = new do |model|
           hsh.each_pair{ |k,v| model.send("#{k}=", v) }
         end
-        if not instance.valid?
+        if !instance.valid?
           array_of_attributes[ i ] = nil
           failed_instances << instance
         end
