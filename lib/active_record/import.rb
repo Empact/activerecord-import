@@ -13,7 +13,7 @@ module ActiveRecord::Import #:nodoc:
   class Result < Struct.new(:failed_instances, :num_inserts)
   end
 
-  AdapterPath = File.join File.expand_path(File.dirname(__FILE__)), "active_record/adapters"
+  ADAPTER_PATH = File.join File.expand_path(File.dirname(__FILE__)), "import/active_record/adapters"
 
   def self.base_adapter(adapter)
     case adapter
@@ -26,7 +26,7 @@ module ActiveRecord::Import #:nodoc:
 
   # Loads the import functionality for a specific database adapter
   def self.require_adapter(adapter)
-    require File.join(AdapterPath, "#{base_adapter(adapter)}_adapter")
+    require File.join(ADAPTER_PATH, "#{base_adapter(adapter)}_adapter")
   end
 
   # use tz as set in ActiveRecord::Base
