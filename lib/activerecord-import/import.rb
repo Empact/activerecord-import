@@ -38,18 +38,16 @@ class ActiveRecord::Base
     # Returns true if the current database connection adapter
     # supports import functionality, otherwise returns false.
     def supports_import?
-      connection.supports_import?
-    rescue NoMethodError
-      false
+      connection.respond_to?(:supports_import?) \
+        && connection.supports_import?
     end
 
     # Returns true if the current database connection adapter
     # supports on duplicate key update functionality, otherwise
     # returns false.
     def supports_on_duplicate_key_update?
-      connection.supports_on_duplicate_key_update?
-    rescue NoMethodError
-      false
+      connection.respond_to?(:supports_on_duplicate_key_update?) \
+        && connection.supports_on_duplicate_key_update?
     end
     
     # Imports a collection of values to the database.  
