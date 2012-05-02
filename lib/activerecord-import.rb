@@ -12,5 +12,5 @@ ActiveSupport.on_load(:active_record_connection_established) do |connection_pool
   if !ActiveRecord.const_defined?(:Import) || !ActiveRecord::Import.respond_to?(:load_from_connection_pool)
     require File.join File.dirname(__FILE__),  "activerecord-import/base"
   end
-  ActiveRecord::Import.load_from_connection_pool connection_pool
+  ActiveRecord::Import.require_adapter connection_pool.spec.config[:adapter]
 end

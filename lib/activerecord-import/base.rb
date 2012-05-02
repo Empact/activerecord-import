@@ -15,11 +15,6 @@ module ActiveRecord::Import
     require File.join(AdapterPath, "abstract_adapter")
     require File.join(AdapterPath, "#{base_adapter(adapter)}_adapter")
   end
-
-  # Loads the import functionality for the passed in ActiveRecord connection
-  def self.load_from_connection_pool(connection_pool)
-    require_adapter connection_pool.spec.config[:adapter]
-  end
 end
 
 
