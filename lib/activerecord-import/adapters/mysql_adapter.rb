@@ -1,5 +1,5 @@
 module ActiveRecord::Import::MysqlAdapter
-  include ActiveRecord::Import::ImportSupport  
+  include ActiveRecord::Import::ImportSupport
   include ActiveRecord::Import::OnDuplicateKeyUpdateSupport
 
   # Returns the maximum number of bytes that the server will allow
@@ -10,9 +10,9 @@ module ActiveRecord::Import::MysqlAdapter
     val = result.respond_to?(:fetch_row) ? result.fetch_row[1] : result.first[1]
     val.to_i
   end
-  
+
   # Returns a generated ON DUPLICATE KEY UPDATE statement given the passed
-  # in +args+. 
+  # in +args+.
   def sql_for_on_duplicate_key_update( table_name, *args ) # :nodoc:
     sql = ' ON DUPLICATE KEY UPDATE '
     arg = args.first
