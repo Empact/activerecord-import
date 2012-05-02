@@ -9,7 +9,7 @@ def should_support_mysql_import_functionality
         "('7','8','9')" ]
 
       adapter = ActiveRecord::Base.connection.class
-      values_size_in_bytes = values.sum {|value| value.size }
+      values_size_in_bytes = values.sum {|value| value.bytesize }
       base_sql_size_in_bytes = 15
       max_bytes = 30
 
