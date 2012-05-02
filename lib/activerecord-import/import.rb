@@ -329,9 +329,11 @@ class ActiveRecord::Base
           end
 
           if supports_on_duplicate_key_update?
-            if options[:on_duplicate_key_update]
-              options[:on_duplicate_key_update] << key.to_sym if options[:on_duplicate_key_update].is_a?(Array)
-              options[:on_duplicate_key_update][key.to_sym] = key.to_sym if options[:on_duplicate_key_update].is_a?(Hash)
+            case options[:on_duplicate_key_update]
+            when Array
+              options[:on_duplicate_key_update] << key.to_sym
+            when Hash
+              options[:on_duplicate_key_update][key.to_sym] = key.to_sym
             else
               options[:on_duplicate_key_update] = [ key.to_sym ]
             end
