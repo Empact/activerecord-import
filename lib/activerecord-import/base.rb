@@ -1,4 +1,3 @@
-require "pathname"
 require "active_record"
 require "active_record/version"
 
@@ -27,7 +26,7 @@ module ActiveRecord::Import
 end
 
 
-this_dir = Pathname.new File.dirname(__FILE__)
-require this_dir.join("import").to_s
-require this_dir.join("active_record/adapters/abstract_adapter").to_s
-require this_dir.join("synchronize").to_s
+this_dir = File.dirname(__FILE__)
+require File.join(this_dir, "import")
+require File.join(this_dir, "active_record/adapters/abstract_adapter")
+require File.join(this_dir, "synchronize")
