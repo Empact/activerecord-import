@@ -160,8 +160,13 @@ class ActiveRecord::Base
 
       is_validating = options.delete( :validate )
 
+      if !args.last.is_a?( Array )
+        raise ArgumentError, '.import expects one or two Array arguments'
+      # supports empty array
+      elsif args.last.empty?
+        return ActiveRecord::Import::Result.new([], 0)
       # assume array of model objects
-      if args.last.is_a?( Array ) and args.last.first.is_a? ActiveRecord::Base
+      elsif args.last.first.is_a? ActiveRecord::Base
         models = args.pop
         column_names = args.first || self.column_names.dup
 
@@ -173,14 +178,11 @@ class ActiveRecord::Base
             end
           # end
         end
-        # supports empty array
-      elsif args.last.is_a?( Array ) and args.last.empty?
-        return ActiveRecord::Import::Result.new([], 0) if args.last.empty?
-        # supports 2-element array and array
-      elsif args.size == 2 and args.first.is_a?( Array ) and args.last.is_a?( Array )
+      # supports 2-element array and array
+      elsif args.size == 2 and args.first.is_a?( Array )
         column_names, array_of_attributes = args
       else
-        raise ArgumentError.new( "Invalid arguments!" )
+        raise ArgumentError
       end
 
       # dup the passed in array so we don't modify it unintentionally
