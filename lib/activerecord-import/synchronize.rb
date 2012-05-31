@@ -33,7 +33,7 @@ module ActiveRecord # :nodoc:
 
       klass = instances.first.class
 
-      fresh_instances = klass.find( :all, :conditions=>conditions, :order=>order )
+      fresh_instances = klass.where(conditions).order(order).all
       instances.each do |instance|
         matched_instance = fresh_instances.detect do |fresh_instance|
           keys.all?{ |key| fresh_instance.send(key) == instance.send(key) }

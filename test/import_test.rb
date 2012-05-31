@@ -61,7 +61,7 @@ describe "#import" do
         assert_difference "Topic.count", +2 do
           result = Topic.import columns, valid_values + invalid_values, :validate => true
         end
-        assert_equal 0, Topic.find_all_by_title(invalid_values.map(&:first)).count
+        assert_equal 0, Topic.where(title: invalid_values.map(&:first)).count
       end
     end
   end
