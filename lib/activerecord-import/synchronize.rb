@@ -42,7 +42,9 @@ module ActiveRecord # :nodoc:
         if matched_instance
           instance.clear_aggregation_cache
           instance.clear_association_cache
-          instance.instance_variable_set '@attributes', matched_instance.attributes
+          instance.instance_variable_get('@attributes').update(matched_instance.instance_variable_get('@attributes'))
+          instance.instance_variable_set('@columns_hash', matched_instance.instance_variable_get('@columns_hash'))
+          instance.instance_variable_set('@attributes_cache', {})
         end
       end
     end
