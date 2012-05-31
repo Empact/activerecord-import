@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Zach Dennis", "Ben Woosley"]
-  s.date = "2012-05-02"
+  s.date = "2012-05-31"
   s.description = "Extraction of the ActiveRecord::Base#import functionality from ar-extensions for Rails 3 and beyond"
   s.email = "ben.woosley@gmail.com"
   s.extra_rdoc_files = [
@@ -36,23 +36,23 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/Empact/activerecord-import"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.23"
   s.summary = "Bulk-loading extension for ActiveRecord"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>, ["~> 3.0"])
+      s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 1.4.0"])
     else
-      s.add_dependency(%q<activerecord>, ["~> 3.0"])
+      s.add_dependency(%q<activerecord>, [">= 3.0.0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 1.4.0"])
     end
   else
-    s.add_dependency(%q<activerecord>, ["~> 3.0"])
+    s.add_dependency(%q<activerecord>, [">= 3.0.0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 1.4.0"])
   end
