@@ -333,13 +333,15 @@ class ActiveRecord::Base
           end
 
           if supports_on_duplicate_key_update?
-            case options[:on_duplicate_key_update]
-            when Array
-              options[:on_duplicate_key_update] << key.to_sym
-            when Hash
-              options[:on_duplicate_key_update][key.to_sym] = key.to_sym
-            else
-              options[:on_duplicate_key_update] = [ key.to_sym ]
+            unless column_names.any?{|cn| cn.to_sym == key.to_sym}
+              case options[:on_duplicate_key_update]
+              when Array
+                options[:on_duplicate_key_update] << key.to_sym
+              when Hash
+                options[:on_duplicate_key_update][key.to_sym] = key.to_sym
+              else
+                options[:on_duplicate_key_update] = [ key.to_sym ]
+              end
             end
           end
         end
